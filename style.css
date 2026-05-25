@@ -14,10 +14,22 @@ html{
 }
 
 body{
-    font-family:'Inter',sans-serif;
-    background:#050816;
-    color:white;
-    overflow-x:hidden;
+    background:
+      radial-gradient(circle at 20% 20%,
+      rgba(0, 247, 255, 0.18),
+      transparent 25%),
+
+      radial-gradient(circle at 80% 30%,
+      rgba(0, 247, 255, 0.12),
+      transparent 30%),
+
+      radial-gradient(circle at 50% 80%,
+      rgba(0, 180, 255, 0.10),
+      transparent 35%),
+
+      #020617;
+
+    overflow-x: hidden;
 }
 
 /* =========================
@@ -58,6 +70,42 @@ body{
     100%{
         transform:translate(30px,20px) scale(1.1);
     }
+}
+
+.bg-glow{
+    position: fixed;
+    inset: 0;
+
+    background:
+      radial-gradient(circle at 30% 40%,
+      rgba(0,247,255,0.12),
+      transparent 25%),
+
+      radial-gradient(circle at 70% 50%,
+      rgba(0,247,255,0.10),
+      transparent 30%),
+
+      radial-gradient(circle at 50% 90%,
+      rgba(0,180,255,0.08),
+      transparent 35%);
+
+    filter: blur(80px);
+
+    z-index: -1;
+
+    animation: glowMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes glowMove{
+
+    0%{
+        transform: translateY(0px) translateX(0px);
+    }
+
+    100%{
+        transform: translateY(-20px) translateX(15px);
+    }
+
 }
 
 /* =========================
@@ -226,6 +274,7 @@ nav{
 .hero{
     height:100vh;
     display:flex;
+    color:#cfcfcf;
     align-items:center;
     justify-content:center;
     padding:0 8%;
@@ -387,6 +436,35 @@ nav{
     animation:pulse 4s infinite;
 }
 
+.hero-image img{
+
+    box-shadow:
+      0 0 25px rgba(0,247,255,0.5),
+      0 0 60px rgba(0,247,255,0.25),
+      0 0 120px rgba(0,247,255,0.15);
+
+}
+
+.hero::before{
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    background: rgba(0,247,255,0.08);
+
+    border-radius: 50%;
+
+    filter: blur(120px);
+
+    top: 10%;
+    right: 10%;
+
+    z-index: -1;
+}
+
 @keyframes pulse{
 
     0%{
@@ -476,6 +554,7 @@ nav{
 
 .section-title h2{
     font-size:3rem;
+    color:#cfcfcf;
 }
 
 .about-text{
@@ -576,6 +655,7 @@ nav{
 
 .project-card h3{
     font-size:2rem;
+    color:#cfcfcf;
     margin-bottom:20px;
 }
 
@@ -678,6 +758,7 @@ nav{
 
 .contact-section{
     padding:100px 8%;
+    color:#cfcfcf;
     text-align:center;
 }
 
@@ -747,6 +828,7 @@ nav{
 
     .hero{
         height:auto;
+        color:#cfcfcf;
         padding:75px 10% 50px;
     }
 
@@ -758,6 +840,7 @@ nav{
 
     .hero h1{
         font-size:38px;
+        color:#cfcfcf;
         line-height:1.15;
         margin-bottom:10px;
     }
