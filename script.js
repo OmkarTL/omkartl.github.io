@@ -180,3 +180,127 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(typeEffect, 500);
 
 });
+
+// =============================
+// SCROLL REVEAL ANIMATION
+// =============================
+
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach((entry) => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+}, {
+    threshold: 0.15
+});
+
+
+// =============================
+// SELECT ALL HIDDEN ELEMENTS
+// =============================
+
+const hiddenElements =
+document.querySelectorAll(".hidden");
+
+
+// =============================
+// OBSERVE ELEMENTS
+// =============================
+
+hiddenElements.forEach((el) => {
+
+    observer.observe(el);
+
+});
+
+// =========================
+// WAIT FOR PAGE LOAD
+// =========================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =========================
+    // ELEMENTS
+    // =========================
+
+    const modal =
+    document.querySelector(".project-modal");
+
+    const openButtons =
+    document.querySelectorAll(".open-modal");
+
+    const closeButton =
+    document.querySelector(".close-modal");
+
+
+    // =========================
+    // OPEN MODAL
+    // =========================
+
+    openButtons.forEach((button) => {
+
+        button.addEventListener("click", () => {
+
+            modal.classList.add("active");
+
+            document.body.style.overflow = "hidden";
+
+        });
+
+    });
+
+
+    // =========================
+    // CLOSE BUTTON
+    // =========================
+
+    closeButton.addEventListener("click", () => {
+
+        modal.classList.remove("active");
+
+        document.body.style.overflow = "auto";
+
+    });
+
+
+    // =========================
+    // OUTSIDE CLICK CLOSE
+    // =========================
+
+    modal.addEventListener("click", (e) => {
+
+        if(e.target === modal){
+
+            modal.classList.remove("active");
+
+            document.body.style.overflow = "auto";
+
+        }
+
+    });
+
+
+    // =========================
+    // ESC KEY CLOSE
+    // =========================
+
+    document.addEventListener("keydown", (e) => {
+
+        if(e.key === "Escape"){
+
+            modal.classList.remove("active");
+
+            document.body.style.overflow = "auto";
+
+        }
+
+    });
+
+});
