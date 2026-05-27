@@ -192,7 +192,7 @@ nav{
 }
 
 .logo{
-    display:flex;
+    display:fixed;
     align-items:center;
     justify-content:center;
 }
@@ -466,67 +466,71 @@ nav{
     }
 }
 
-/* =========================
+/* ========================================
    SCROLL INDICATOR
-========================= */
+======================================== */
 
 .scroll-indicator{
-    position:absolute;
 
-    bottom:25px;
-    left:50%;
+    position: absolute;
 
-    transform:translateX(-50%);
+    bottom: 40px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 20px;
+    height: 40px;
+
+    border: 2px solid #00f0ff;
+
+    border-radius: 30px;
+
+    display: flex;
+    justify-content: center;
+
+    cursor: pointer;
 }
 
 .scroll-indicator span{
-    display:block;
 
-    width:20px;
-    height:35px;
+    width: 6px;
+    height: 7px;
 
-    border:2px solid #00ffff;
-    border-radius:20px;
+    background: #00f0ff;
 
-    position:relative;
+    border-radius: 10px;
+
+    margin-top: 10px;
+
+    animation: scrollAnim 1.8s infinite;
 }
 
-.scroll-indicator span::before{
-    content:"";
+/* ========================================
+   SCROLL ANIMATION
+======================================== */
 
-    position:relative;
+@keyframes scrollAnim{
 
-    top:6px;
-    left:50%;
-
-    width:4px;
-    height:8px;
-
-    background:#00ffff;
-
-    border-radius:10px;
-
-    transform:translateX(-50%);
-
-    animation:scroll 1.5s infinite;
-}
-
-@keyframes scroll{
     0%{
-        opacity:0;
-        top:6px;
+
+        opacity: 0;
+
+        transform: translateY(0);
     }
 
-    50%{
-        opacity:1;
+    30%{
+
+        opacity: 1;
     }
 
     100%{
-        opacity:0;
-        top:16px;
+
+        opacity: 0;
+
+        transform: translateY(18px);
     }
 }
-
 /* =========================
    ABOUT / SKILLS / PROJECTS
 ========================= */
@@ -1108,6 +1112,40 @@ nav{
     color:#00ffff;
 }
 
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer{
+
+    width: 100%;
+
+    padding: 28px 20px;
+
+    margin-top: 80px;
+
+    text-align: center;
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    background: rgba(255,255,255,0.02);
+
+    backdrop-filter: blur(8px);
+}
+
+.footer p{
+
+    color: #9ca3af;
+
+    font-size: 14px;
+
+    letter-spacing: 0.5px;
+
+    line-height: 1.6;
+}
+
+
 /* =========================
    MOBILE RESPONSIVE
 ========================= */
@@ -1279,5 +1317,28 @@ nav{
     .modal-github{
         width:100%;
         justify-content:center;
+    }
+}
+
+/* ========================================
+   MOBILE FOOTER
+======================================== */
+
+@media (max-width: 768px){
+
+    .footer{
+
+        padding: 22px 16px;
+
+        margin-top: 60px;
+    }
+
+    .footer p{
+
+        font-size: 12px;
+
+        line-height: 1.5;
+
+        padding: 0 10px;
     }
 }
