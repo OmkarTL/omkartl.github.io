@@ -186,7 +186,7 @@ body{
     align-items:center;
     justify-content:space-between;
 
-    padding:0 50px;
+    padding:0 clamp(18px, 4vw, 50px);
 
     background:rgba(255,255,255,0.02);
 
@@ -245,7 +245,7 @@ body{
 
     color:rgba(255,255,255,0.82);
 
-    font-size:17px;
+    font-size:clamp(14px, 1.2vw, 17px);
     font-weight:500;
 
     transition:0.3s ease;
@@ -310,18 +310,23 @@ body{
 }
 
 .hero-content{
-    width:100%;
-    max-width:1400px;
+
+    width:min(1400px, 92vw);
+
+    margin:auto;
 
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:center;
 
-    gap:60px;
+    gap:clamp(30px, 6vw, 90px);
+
+    flex-wrap:wrap;
 }
 
 .hero-left{
-    flex:1;
+    flex:1 1 500px;
+    min-width:280px;
     max-width:650px;
 }
 
@@ -335,7 +340,7 @@ body{
 }
 
 .hero h1{
-    font-size:70px;
+    font-size:clamp(38px, 8vw, 72px);
     line-height:1.1;
 
     margin-bottom:20px;
@@ -346,7 +351,7 @@ body{
 }
 
 .typing-text{
-    font-size:28px;
+    font-size:clamp(18px, 3vw, 28px);
     color:#8be9fd;
 
     margin-bottom:20px;
@@ -355,6 +360,7 @@ body{
 }
 
 .hero-description{
+    font-size:clamp(14px, 1.5vw, 18px);
     max-width:600px;
 
     color:#cfcfcf;
@@ -379,7 +385,9 @@ body{
 }
 
 .hero-btn{
-    padding:18px 26px;
+   padding:
+        clamp(12px, 1vw, 18px)
+        clamp(16px, 2vw, 26px);
 
     border-radius:20px;
 
@@ -423,8 +431,7 @@ body{
 ========================= */
 
 .hero-right{
-    flex:1;
-
+    flex:1 1 400px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -433,8 +440,8 @@ body{
 .image-wrapper{
     position:relative;
 
-    width:300px;
-    height:340px;
+    width:min(380px, 90vw);
+    height:auto;
 
     display:flex;
     justify-content:center;
@@ -442,22 +449,16 @@ body{
 }
 
 .image-wrapper img{
-    width:580px;
-    height:580px;
-
+    width:min(380px, 100%);
+    height:auto;
     object-fit:cover;
-
     border-radius:25%;
-
     position:relative;
     z-index:2;
-
     border:3px solid rgba(0,255,255,0.5);
-
     box-shadow:
         0 0 30px rgba(0,255,255,0.3),
         0 0 80px rgba(0,255,255,0.15);
-
     transition:0.5s ease;
 }
 
@@ -1229,22 +1230,11 @@ body{
     }
 
     .hero-content{
-        flex-direction:column;
-        text-align:center;
-
-        gap:1px;
-    }
-
-    .hero h1{
-        font-size:38px;
-
-        line-height:1.15;
-
-        margin-bottom:10px;
-    }
+    text-align:center;
+    gap:30px;
+   }
 
     .typing-text{
-        font-size:18px;
         letter-spacing:1px;
     }
 
