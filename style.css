@@ -14,13 +14,11 @@ html{
 }
 
 body{
-    background:
-        radial-gradient(circle at 20% 20%, rgba(0,247,255,0.18), transparent 25%),
-        radial-gradient(circle at 80% 30%, rgba(0,247,255,0.12), transparent 30%),
-        radial-gradient(circle at 50% 80%, rgba(0,180,255,0.10), transparent 35%),
-        #020617;
+    background:#020617;
 
     overflow-x:hidden;
+
+    position:relative;
 }
 
 
@@ -31,7 +29,7 @@ body{
 .animated-bg{
     position:fixed;
     inset:0;
-    z-index:-2;
+    z-index:-3;
 
     background:
         radial-gradient(circle at top left, rgba(56,189,248,0.15), transparent 30%),
@@ -65,7 +63,7 @@ body{
         radial-gradient(circle at 50% 90%, rgba(0,180,255,0.08), transparent 35%);
 
     filter:blur(80px);
-    z-index:-1;
+    z-index:-2;
 
     animation:glowMove 10s ease-in-out infinite alternate;
 }
@@ -78,6 +76,67 @@ body{
     100%{
         transform:translateY(-20px) translateX(15px);
     }
+}
+
+/* =========================
+   CIRCUIT BACKGROUND
+========================= */
+
+.bg-dark{
+
+    position:fixed;
+    inset:0;
+
+    z-index:-4;
+
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.bg-dark img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    opacity:0.05;
+
+    filter:
+        brightness(0.45)
+        contrast(1.05);
+}
+
+/* =========================
+   BRIGHT REVEAL LAYER
+========================= */
+
+.bg-bright{
+
+    position:fixed;
+    inset:0;
+
+    z-index:-1;
+
+    pointer-events:none;
+}
+
+.bg-bright img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    opacity:0.1;
+
+    filter:
+        brightness(1.2)
+        contrast(1.0);
+
+    mask-repeat:no-repeat;
+    -webkit-mask-repeat:no-repeat;
+
 }
 
 /* =========================
@@ -351,12 +410,14 @@ body{
 }
 
 .typing-text{
-    font-size:clamp(18px, 3vw, 28px);
+    font-size:clamp(15px, 3vw, 25px);
     color:#8be9fd;
-
+    opacity:0.9px;
     margin-bottom:20px;
-
     min-height:40px;
+    font-family:"Orbitron", sans-serif;
+    font-weight:600;
+    letter-spacing:2px;
 }
 
 .hero-description{
@@ -367,6 +428,9 @@ body{
     line-height:1.8;
 
     margin-bottom:30px;
+    font-family:
+        "Space Grotesk",
+        sans-serif;
 }
 
 /* =========================
@@ -1230,8 +1294,8 @@ body{
     }
 
     .hero-content{
-    text-align:center;
-    gap:30px;
+       text-align:center;
+       gap:30px;
    }
 
     .typing-text{
@@ -1372,6 +1436,14 @@ body{
     .modal-github{
         width:100%;
         justify-content:center;
+    }
+
+    .bg-dark img{
+       opacity:0.08;
+   }
+
+     .bg-bright img{
+       display:none;
     }
 }
 

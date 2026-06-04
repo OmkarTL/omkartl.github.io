@@ -11,6 +11,7 @@ console.log("Portfolio Loaded");
 const roles = [
 
     "VLSI Design Enthusiast",
+    "PALS Campus Ambassador",
     "Embedded Systems Engineer",
     "FPGA & RTL Developer",
     "Hardware Systems Builder"
@@ -144,6 +145,42 @@ if(isDesktop){
     });
 
 }
+
+// =========================
+// CIRCUIT REVEAL EFFECT
+// =========================
+
+const revealLayer =
+document.querySelector(
+".bg-bright img"
+);
+
+window.addEventListener(
+"mousemove",
+(e)=>{
+
+    revealLayer.style.webkitMaskImage =
+    `
+    radial-gradient(
+        circle 250px at
+        ${e.clientX}px ${e.clientY}px,
+
+        white 0%,
+
+        rgba(255,255,255,0.95) 20%,
+
+        rgba(255,255,255,0.7) 40%,
+
+        rgba(255,255,255,0.25) 65%,
+
+        transparent 100%
+    )
+    `;
+
+    revealLayer.style.maskImage =
+    revealLayer.style.webkitMaskImage;
+
+});
 
 // =========================
 // TOUCH RIPPLE EFFECT
