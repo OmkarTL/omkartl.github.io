@@ -314,41 +314,6 @@ body{
     color:#38BDF8;
 }
 
-/* MODE TOGGLE */
-
-.mode-toggle{
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:12px 22px;
-
-    border:none;
-    outline:none;
-
-    border-radius:999px;
-
-    background:rgba(255,255,255,0.04);
-
-    color:white;
-
-    font-size:14px;
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:0.3s ease;
-}
-
-.mode-toggle:hover{
-
-    background:rgba(255,255,255,0.08);
-
-    transform:translateY(-2px);
-}
-
-
 /* =========================
    HERO SECTION
 ========================= */
@@ -385,23 +350,13 @@ body{
 
 .hero-left{
     flex:1 1 500px;
-    min-width:280px;
+    min-width:300px;
     max-width:650px;
-}
-
-.hero-tag{
-    color:#00ffff;
-    letter-spacing:3px;
-
-    margin-bottom:20px;
-
-    font-size:14px;
 }
 
 .hero h1{
     font-size:clamp(38px, 8vw, 72px);
     line-height:1.1;
-
     margin-bottom:20px;
 }
 
@@ -411,8 +366,8 @@ body{
 
 .typing-text{
     font-size:clamp(15px, 3vw, 25px);
-    color:#8be9fd;
-    opacity:0.9px;
+    color:#8be8fda3;
+    opacity:0px;
     margin-bottom:20px;
     min-height:40px;
     font-family:"Orbitron", sans-serif;
@@ -453,7 +408,7 @@ body{
         clamp(12px, 1vw, 18px)
         clamp(16px, 2vw, 26px);
 
-    border-radius:20px;
+    border-radius:30px;
 
     text-decoration:none;
     text-align:center;
@@ -664,14 +619,6 @@ body{
     margin-bottom:60px;
 }
 
-.section-title p{
-    color:#38BDF8;
-
-    margin-bottom:10px;
-
-    letter-spacing:1px;
-}
-
 .section-title h2{
     font-size:3rem;
     color:#cfcfcf;
@@ -692,54 +639,94 @@ body{
 }
 
 /* =========================
-   SKILLS
+   TECHNICAL ARSENAL
 ========================= */
 
-.skills-container{
+.arsenal-section{
+
+    width:min(1100px,60%);
+    margin:auto;
+    padding:100px 0;
+}
+
+.arsenal-section .section-title{
+
+    text-align:center;
+}
+
+.arsenal-grid{
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-    gap:25px;
+    grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(160px,1fr)
+    );
+    gap:20px;
+    margin-top:60px;
 }
 
-.skill-card{
-    background:#111827;
-
-    padding:30px;
-
+.arsenal-card{
+    min-height:140px;
+    background:rgba(8,15,30,0.8);
+    border:1px solid rgba(0,255,255,0.08);
     border-radius:20px;
-
-    border:1px solid rgba(56,189,248,0.1);
-
-    transition:0.4s ease;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    padding:16px;
+    transition:0.35s ease;
+    backdrop-filter:blur(12px);
 }
 
-.skill-card:hover{
-    transform:translateY(-8px);
+.arsenal-card:hover{
 
-    border-color:#38BDF8;
-
+    transform:
+        translateY(-6px)
+        scale(1.03);
+    border-color:#00ffff;
     box-shadow:
-        0 0 30px rgba(56,189,248,0.15);
+        0 0 20px rgba(0,255,255,0.15),
+        0 0 60px rgba(0,255,255,0.08);
 }
 
-.skill-card h3{
-    margin-bottom:25px;
-    color:#38BDF8;
+.arsenal-card i{
+    font-size:2rem;
+    color:#a5b4cc;
+    filter:none;
+    transition:all 0.3s ease;
 }
 
-.skill-card ul{
-    list-style:none;
+.arsenal-card:hover i{
+
+    color:#00ffff;
+    filter:
+        drop-shadow(0 0 10px #00ffff)
+        drop-shadow(0 0 20px rgba(0,255,255,0.7));
+
+    transform:translateY(-2px) scale(1.08);
+    transition-delay:0.12s;
 }
 
-.skill-card li{
-    margin-bottom:15px;
-    color:#CBD5E1;
+.arsenal-card span{
+    padding:8px 14px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.04);
+    color:#b8c0cc;
+    font-size:0.9rem;
+    text-align:center;
+    line-height:1.3;
 }
 
 /* =========================
    PROJECTS
 ========================= */
+
+.projects-section .section-title{
+    text-align:center;
+}
 
 .projects-container{
     display:flex;
@@ -926,22 +913,15 @@ body{
 .project-modal{
     position:fixed;
     inset:0;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     padding:40px;
-
     background:rgba(0,247,255,0.08);
-
     backdrop-filter:blur(10px);
-
-    z-index:999;
-
+    z-index:1000;
     opacity:0;
     visibility:hidden;
-
     transition:0.4s ease;
 }
 
@@ -952,30 +932,20 @@ body{
 
 .modal-box{
     position:relative;
-
     width:100%;
     max-width:1600px;
-
-    max-height:150vh;
-
+    max-height:90vh;
     overflow-y:auto;
-
     padding:50px;
-
-    border-radius:28px;
-
+    border-radius:48px;
     background:rgba(10,15,25,0.88);
-
     border:1px solid rgba(0,247,255,0.12);
-
     backdrop-filter:blur(18px);
-
     box-shadow:
         0 0 35px rgba(0,247,255,0.12),
         0 0 100px rgba(0,247,255,0.05);
 
     transform:scale(0.92);
-
     transition:0.4s ease;
 }
 
@@ -1055,39 +1025,30 @@ body{
 
 .modal-number{
     color:#00f7ff;
-
     font-size:0.9rem;
-
     letter-spacing:3px;
-
     margin-bottom:14px;
 }
 
 .modal-header h2{
     font-size:2.5rem;
-
     margin-bottom:20px;
-
     color:white;
 }
 
 .modal-header p,
 .modal-description p{
     color:#b8c0cc;
-
     line-height:1.9;
 }
 
 .modal-images{
     display:grid;
-
     grid-template-columns:
         repeat(auto-fit,minmax(180px,1fr));
 
     gap:4px;
-
     align-items:center;
-
     margin:10px 0;
 }
 
@@ -1098,11 +1059,8 @@ body{
 
 .modal-images img{
     width:100%;
-
     border-radius:18px;
-
     border:1px solid rgba(0,247,255,0.12);
-
     transition:0.4s ease;
 }
 
@@ -1118,6 +1076,61 @@ body{
     margin-bottom:20px;
 }
 
+.project-details{
+
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
+    gap:24px;
+    margin:40px 0;
+}
+
+.detail-block{
+
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(0,247,255,0.12);
+    border-radius:18px;
+    padding:24px;
+    backdrop-filter:blur(10px);
+    transition:.3s ease;
+}
+
+.detail-block:hover{
+
+    transform:translateY(-4px);
+    border-color:#00f7ff;
+    box-shadow:
+        0 0 20px rgba(0,247,255,0.12);
+}
+
+.detail-block h3{
+
+    color:#00f7ff;
+    margin-bottom:18px;
+    font-size:1.1rem;
+}
+
+.detail-block ul{
+
+    list-style:none;
+    padding:0;
+}
+
+.detail-block li{
+    color:#b8c0cc;
+    margin-bottom:10px;
+    position:relative;
+    padding-left:18px;
+    line-height:1.6;
+}
+
+.detail-block li::before{
+    content:"▸";
+    position:absolute;
+    left:0;
+    color:#00f7ff;
+}
+
 /* =========================
    MODAL GITHUB BUTTON
 ========================= */
@@ -1126,35 +1139,22 @@ body{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-
     gap:8px;
-
     margin-top:20px;
-
     padding:15px 20px;
-
     border-radius:30px;
-
     text-decoration:none;
-
     color:#00f7ff;
-
     background:rgba(255,255,255,0.04);
-
     border:1px solid rgba(0,247,255,0.3);
-
     backdrop-filter:blur(10px);
-
     overflow:hidden;
-
     transition:all 0.35s ease;
 }
 
 .modal-github:hover{
     background:rgba(0,247,255,0.08);
-
     transform:scale(1.03);
-
     box-shadow:
         0 0 20px rgba(0,247,255,0.15);
 }
@@ -1281,11 +1281,6 @@ body{
        width:48px;
      }
 
-    .mode-toggle{
-        padding:10px 16px;
-        font-size:12px;
-     }
-
     .hero{
         height:auto;
         padding:75px 10% 50px;
@@ -1303,7 +1298,7 @@ body{
     }
 
     .hero-description{
-        font-size:15px;
+        font-size:16px;
         line-height:1.8;
     }
 
@@ -1343,11 +1338,35 @@ body{
     }
 
     .logo img{
-        width:55px;
+        width:50px;
     }
 
     .scroll-indicator{
         display:none;
+    }
+
+    .arsenal-section{
+        width:90%;
+    }
+
+    .arsenal-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .arsenal-card{
+        min-height:110px;
+        padding:12px;
+        gap:8px;
+    }
+
+    .arsenal-card i{
+        font-size:1.5rem;
+    }
+
+    .arsenal-card span{
+        font-size:0.75rem;
+        padding:6px 8px;
     }
 
     .contact-buttons{
@@ -1431,6 +1450,11 @@ body{
 
     .modal-images img{
         border-radius:16px;
+    }
+
+    .project-details{
+        grid-template-columns:1fr;
+        gap:16px;
     }
 
     .modal-github{
