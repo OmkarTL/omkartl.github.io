@@ -1,332 +1,315 @@
-// =========================
-// PORTFOLIO LOADED
-// =========================
+/* ========================================
+   PORTFOLIO JAVASCRIPT
+======================================== */
 
-console.log("Portfolio Loaded");
+(() => {
+    "use strict";
 
-// =========================
-// TYPING EFFECT
-// =========================
+    /* ========================================
+       ROTATING ROLE DATA
+    ======================================== */
+    const roles = [
+        "VLSI Design Enthusiast",
+        "PALS Campus Ambassador",
+        "Embedded Systems Engineer",
+        "FPGA & RTL Developer",
+        "Hardware Systems Builder"
+    ];
 
-const roles = [
+    /* ========================================
+       GLOBAL STATE
+    ======================================== */
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const typingElement = document.querySelector(".typing-text");
 
-    "VLSI Design Enthusiast",
-    "PALS Campus Ambassador",
-    "Embedded Systems Engineer",
-    "FPGA & RTL Developer",
-    "Hardware Systems Builder"
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingTimer = null;
 
-];
+    /* ========================================
+       TYPING EFFECT
+    ======================================== */
+    function updateTypingText() {
+        if (!typingElement) return;
 
-let roleIndex = 0;
-let charIndex = 0;
-
-const typingElement =
-document.querySelector(".typing-text");
-
-function typeEffect(){
-
-    if(charIndex < roles[roleIndex].length){
-
-        typingElement.textContent +=
-        roles[roleIndex].charAt(charIndex);
-
-        charIndex++;
-
-        setTimeout(typeEffect, 100);
-
-    }
-
-    else{
-
-        setTimeout(eraseEffect, 1800);
-
-    }
-}
-
-function eraseEffect(){
-
-    if(charIndex > 0){
-
-        typingElement.textContent =
-        roles[roleIndex].substring(0, charIndex - 1);
-
-        charIndex--;
-
-        setTimeout(eraseEffect, 50);
-
-    }
-
-    else{
-
-        roleIndex++;
-
-        if(roleIndex >= roles.length){
-
-            roleIndex = 0;
-
+        if (prefersReducedMotion) {
+            typingElement.textContent = roles[0];
+            return;
         }
 
-        setTimeout(typeEffect, 300);
+        const currentRole = roles[roleIndex];
+        typingElement.textContent = currentRole.slice(0, charIndex);
 
-    }
-}
+        if (!isDeleting && charIndex < currentRole.length) {
+            charIndex += 1;
+            typingTimer = window.setTimeout(updateTypingText, 70);
+            return;
+        }
 
-// =========================
-// CUSTOM CURSOR
-// =========================
+        if (!isDeleting && charIndex === currentRole.length) {
+            isDeleting = true;
+            typingTimer = window.setTimeout(updateTypingText, 1600);
+            return;
+        }
 
-const isDesktop =
-window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        if (isDeleting && charIndex > 0) {
+            charIndex -= 1;
+            typingTimer = window.setTimeout(updateTypingText, 34);
+            return;
+        }
 
-if(isDesktop){
-
-    const cursorDot =
-    document.querySelector(".cursor-dot");
-
-    const cursorOutline =
-    document.querySelector(".cursor-outline");
-
-    let mouseX = 0;
-    let mouseY = 0;
-
-    let outlineX = 0;
-    let outlineY = 0;
-
-    window.addEventListener("mousemove", (e) => {
-
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-
-        cursorDot.style.left = `${mouseX}px`;
-        cursorDot.style.top = `${mouseY}px`;
-
-    });
-
-    function animateCursor(){
-
-        outlineX += (mouseX - outlineX) * 0.12;
-        outlineY += (mouseY - outlineY) * 0.12;
-
-        cursorOutline.style.left = `${outlineX}px`;
-        cursorOutline.style.top = `${outlineY}px`;
-
-        requestAnimationFrame(animateCursor);
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        typingTimer = window.setTimeout(updateTypingText, 320);
     }
 
-    animateCursor();
+    /* ========================================
+       MOBILE NAVIGATION
+    ======================================== */
+    function initNavigation() {
+        const toggle = document.querySelector(".nav-toggle");
+        const navLinks = document.querySelector(".nav-links");
+        const links = document.querySelectorAll(".nav-links a");
 
-    // =========================
-    // CURSOR HOVER EFFECT
-    // =========================
+        if (!toggle || !navLinks) return;
 
-    const hoverElements =
-    document.querySelectorAll("a, button");
+        function closeMenu() {
+            navLinks.classList.remove("is-open");
+            toggle.setAttribute("aria-expanded", "false");
+        }
 
-    hoverElements.forEach((element) => {
+        function toggleMenu() {
+            const isOpen = navLinks.classList.toggle("is-open");
+            toggle.setAttribute("aria-expanded", String(isOpen));
+        }
 
-        element.addEventListener("mouseenter", () => {
+        toggle.addEventListener("click", toggleMenu);
 
-            cursorOutline.style.width = "70px";
-            cursorOutline.style.height = "70px";
-
-            cursorOutline.style.borderColor =
-            "#00ffff";
-
+        links.forEach((link) => {
+            link.addEventListener("click", closeMenu);
         });
 
-        element.addEventListener("mouseleave", () => {
+        document.addEventListener("click", (event) => {
+            const isClickInsideNav = event.target.closest(".navbar");
 
-            cursorOutline.style.width = "40px";
-            cursorOutline.style.height = "40px";
-
+            if (!isClickInsideNav) {
+                closeMenu();
+            }
         });
 
-    });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+        });
+    }
 
-}
+    /* ========================================
+       ACTIVE NAVIGATION ON SCROLL
+    ======================================== */
+    function initActiveNavigation() {
+        const sections = document.querySelectorAll("section[id]");
+        const links = document.querySelectorAll(".nav-links a");
 
-// =========================
-// CIRCUIT REVEAL EFFECT
-// =========================
+        if (!sections.length || !links.length || !("IntersectionObserver" in window)) return;
 
-const revealLayer =
-document.querySelector(
-".bg-bright img"
-);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
 
-window.addEventListener(
-"mousemove",
-(e)=>{
-
-    revealLayer.style.webkitMaskImage =
-    `
-    radial-gradient(
-        circle 250px at
-        ${e.clientX}px ${e.clientY}px,
-
-        white 0%,
-
-        rgba(255,255,255,0.95) 20%,
-
-        rgba(255,255,255,0.7) 40%,
-
-        rgba(255,255,255,0.25) 65%,
-
-        transparent 100%
-    )
-    `;
-
-    revealLayer.style.maskImage =
-    revealLayer.style.webkitMaskImage;
-
-});
-
-// =========================
-// TOUCH RIPPLE EFFECT
-// =========================
-
-window.addEventListener("touchstart", (e) => {
-
-    const touch = e.touches[0];
-
-    const ripple =
-    document.createElement("div");
-
-    ripple.className = "touch-ripple";
-
-    ripple.style.left = `${touch.clientX}px`;
-    ripple.style.top = `${touch.clientY}px`;
-
-    document.body.appendChild(ripple);
-
-    setTimeout(() => {
-
-        ripple.remove();
-
-    }, 600);
-
-});
-
-// =========================
-// START ANIMATIONS
-// =========================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    setTimeout(typeEffect, 500);
-
-});
-
-// =============================
-// SCROLL REVEAL ANIMATION
-// =============================
-
-const observer = new IntersectionObserver((entries) => {
-
-    entries.forEach((entry) => {
-
-        if (entry.isIntersecting) {
-
-            entry.target.classList.add("show");
-
-        }
-
-    });
-
-}, {
-    threshold: 0.15
-});
-
-
-// =============================
-// SELECT ALL HIDDEN ELEMENTS
-// =============================
-
-const hiddenElements =
-document.querySelectorAll(".hidden");
-
-// =========================
-// WAIT FOR PAGE LOAD
-// =========================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    // =========================
-    // ELEMENTS
-    // =========================
-
-    const modal =
-    document.querySelector(".project-modal");
-
-    const openButtons =
-    document.querySelectorAll(".open-modal");
-
-    const closeButton =
-    document.querySelector(".close-modal");
-
-
-    // =========================
-    // OPEN MODAL
-    // =========================
-
-    openButtons.forEach((button) => {
-
-        button.addEventListener("click", () => {
-
-            modal.classList.add("active");
-
-            document.body.style.overflow = "hidden";
-
+                links.forEach((link) => {
+                    const isActive = link.getAttribute("href") === `#${entry.target.id}`;
+                    link.classList.toggle("is-active", isActive);
+                });
+            });
+        }, {
+            rootMargin: "-45% 0px -48% 0px",
+            threshold: 0
         });
 
-    });
+        sections.forEach((section) => observer.observe(section));
+    }
 
+    /* ========================================
+       TIMELINE REVEAL
+    ======================================== */
+    function initTimelineReveal() {
+        const cards = document.querySelectorAll(".timeline-card");
 
-    // =========================
-    // CLOSE BUTTON
-    // =========================
+        if (!cards.length) return;
 
-    closeButton.addEventListener("click", () => {
-
-        modal.classList.remove("active");
-
-        document.body.style.overflow = "auto";
-
-    });
-
-
-    // =========================
-    // OUTSIDE CLICK CLOSE
-    // =========================
-
-    modal.addEventListener("click", (e) => {
-
-        if(e.target === modal){
-
-            modal.classList.remove("active");
-
-            document.body.style.overflow = "auto";
-
+        if (!("IntersectionObserver" in window) || prefersReducedMotion) {
+            cards.forEach((card) => card.classList.add("show"));
+            return;
         }
 
-    });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
 
+                entry.target.classList.add("show");
+                observer.unobserve(entry.target);
+            });
+        }, {
+            threshold: 0.15
+        });
 
-    // =========================
-    // ESC KEY CLOSE
-    // =========================
+        cards.forEach((card) => observer.observe(card));
+    }
 
-    document.addEventListener("keydown", (e) => {
+    /* ========================================
+       FOCUSABLE ELEMENT HELPER
+    ======================================== */
+    function getFocusableElements(container) {
+        return Array.from(
+            container.querySelectorAll(
+                'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )
+        ).filter((element) => !element.hasAttribute("disabled") && !element.getAttribute("aria-hidden"));
+    }
 
-        if(e.key === "Escape"){
+    /* ========================================
+       MODAL SYSTEM
+    ======================================== */
+    function initModalSystem() {
+        const triggers = document.querySelectorAll("[data-modal-target]");
+        const closeButtons = document.querySelectorAll("[data-modal-close]");
 
-            modal.classList.remove("active");
+        let activeModal = null;
+        let lastFocusedElement = null;
 
-            document.body.style.overflow = "auto";
+        function openModal(modal, trigger) {
+            if (!modal) return;
 
+            if (activeModal) {
+                closeModal(false);
+            }
+
+            activeModal = modal;
+            lastFocusedElement = trigger || document.activeElement;
+
+            modal.hidden = false;
+            document.body.classList.add("modal-open");
+
+            window.requestAnimationFrame(() => {
+                activeModal.classList.add("is-open");
+
+                const focusableElements = getFocusableElements(activeModal);
+                const closeButton = activeModal.querySelector("[data-modal-close]");
+
+                if (closeButton) {
+                    closeButton.focus();
+                } else if (focusableElements.length) {
+                    focusableElements[0].focus();
+                }
+            });
         }
 
-    });
+        function closeModal(restoreFocus = true) {
+            if (!activeModal) return;
 
-});
+            const modalToClose = activeModal;
+            activeModal = null;
+
+            modalToClose.classList.remove("is-open");
+            document.body.classList.remove("modal-open");
+
+            window.setTimeout(() => {
+                modalToClose.hidden = true;
+
+                if (restoreFocus && lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+                    lastFocusedElement.focus();
+                }
+
+                lastFocusedElement = null;
+            }, 180);
+        }
+
+        function handleTriggerActivation(trigger) {
+            const modalId = trigger.getAttribute("data-modal-target");
+            const modal = document.getElementById(modalId);
+
+            if (!modal) return;
+
+            openModal(modal, trigger);
+        }
+
+        triggers.forEach((trigger) => {
+            trigger.addEventListener("click", () => handleTriggerActivation(trigger));
+
+            trigger.addEventListener("keydown", (event) => {
+                const isActivationKey = event.key === "Enter" || event.key === " ";
+
+                if (!isActivationKey) return;
+
+                event.preventDefault();
+                handleTriggerActivation(trigger);
+            });
+        });
+
+        closeButtons.forEach((button) => {
+            button.addEventListener("click", () => closeModal());
+        });
+
+        document.addEventListener("click", (event) => {
+            if (activeModal && event.target === activeModal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (!activeModal) return;
+
+            if (event.key === "Escape") {
+                closeModal();
+                return;
+            }
+
+            if (event.key !== "Tab") return;
+
+            const focusableElements = getFocusableElements(activeModal);
+
+            if (!focusableElements.length) {
+                event.preventDefault();
+                return;
+            }
+
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (event.shiftKey && document.activeElement === firstElement) {
+                event.preventDefault();
+                lastElement.focus();
+                return;
+            }
+
+            if (!event.shiftKey && document.activeElement === lastElement) {
+                event.preventDefault();
+                firstElement.focus();
+            }
+        });
+    }
+
+    /* ========================================
+       INITIALIZATION
+    ======================================== */
+    function init() {
+        updateTypingText();
+        initNavigation();
+        initActiveNavigation();
+        initTimelineReveal();
+        initModalSystem();
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+
+    /* ========================================
+       CLEANUP
+    ======================================== */
+    window.addEventListener("pagehide", () => {
+        if (typingTimer) {
+            window.clearTimeout(typingTimer);
+        }
+    });
+})();
