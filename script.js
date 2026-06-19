@@ -298,12 +298,64 @@
         updateTypingText();
         initNavigation();
         initActiveNavigation();
+        initThemeToggle();
         initTimelineReveal();
         initModalSystem();
     }
 
     document.addEventListener("DOMContentLoaded", init);
+/* ========================================
+   THEME TOGGLE
+======================================== */
+function initThemeToggle() {
+    const themeToggle = document.querySelector(".theme-toggle");
+    const themeIcon = themeToggle?.querySelector(".theme-toggle-thumb i");
+    const root = document.documentElement;
 
+    if (!themeToggle || !themeIcon) return;
+
+    function applyTheme(theme, animate = true) {
+        const isDark = theme === "dark";
+
+        if (animate) {
+            root.classList.add("theme-changing");
+
+            window.setTimeout(() => {
+                root.classList.remove("theme-changing");
+            }, 420);
+        }
+
+        if (isDark) {
+            root.setAttribute("data-theme", "dark");
+        } else {
+            root.removeAttribute("data-theme");
+        }
+
+        localStorage.setItem("portfolio-theme", isDark ? "dark" : "light");
+
+        themeToggle.setAttribute("aria-pressed", String(isDark));
+        themeToggle.setAttribute(
+            "aria-label",
+            isDark ? "Switch to light theme" : "Switch to dark theme"
+        );
+
+        themeIcon.classList.toggle("fa-moon", !isDark);
+        themeIcon.classList.toggle("fa-sun", isDark);
+    }
+
+    const savedTheme = localStorage.getItem("portfolio-theme");
+
+    if (savedTheme === "dark") {
+        applyTheme("dark", false);
+    } else {
+        applyTheme("light", false);
+    }
+
+    themeToggle.addEventListener("click", () => {
+        const isDark = root.getAttribute("data-theme") === "dark";
+        applyTheme(isDark ? "light" : "dark");
+    });
+}
     /* ========================================
        CLEANUP
     ======================================== */

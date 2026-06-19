@@ -183,6 +183,18 @@ section[id] {
     padding-inline: 20px;
 }
 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.nav-links {
+    margin-left: auto;
+    margin-right: 24px;
+}
+
 .navbar {
     width: min(var(--max-width), 100%);
     min-height: 68px;
@@ -191,7 +203,8 @@ section[id] {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    flex-wrap: nowrap;
+    gap: 8px;
     border: 1px solid rgba(37, 99, 235, 0.12);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.76);
@@ -237,7 +250,7 @@ section[id] {
     display: inline-flex;
     align-items: center;
     min-height: 40px;
-    padding-inline: 16px;
+    padding-inline: 12px;
     border-radius: 999px;
     color: var(--navy-soft);
     font-size: 0.94rem;
@@ -1655,7 +1668,19 @@ section[id] {
         height: 34px;
     }
 
-    .nav-toggle {
+    .theme-toggle {
+        order: 2;
+        margin-left: auto;
+        margin-right: 4px;
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .nav-toggle{
         display: block;
     }
 
@@ -1670,10 +1695,6 @@ section[id] {
 
     .nav-links.is-open {
         display: flex;
-    }
-
-    .nav-links a {
-        justify-content: center;
     }
 
     .hero {
@@ -1968,4 +1989,645 @@ section[id] {
     .typing-text::after {
         display: none;
     }
-}   
+}  
+
+/* ========================================
+   THEME TOGGLE
+======================================== */
+.theme-toggle {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.theme-toggle-track {
+    position: relative;
+    width: 56px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid rgba(37, 99, 235, 0.18);
+    border-radius: 999px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.96),
+            rgba(232,240,255,0.9)
+        );
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.9),
+        0 4px 12px rgba(15,23,42,0.08);
+}
+
+.theme-toggle-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: var(--accent);
+    transform: translateX(0);
+    box-shadow:
+        0 2px 8px rgba(15,23,42,0.12);
+    transition:
+        transform 260ms ease,
+        background 260ms ease,
+        color 260ms ease,
+        box-shadow 260ms ease;
+}
+
+.theme-toggle-thumb i {
+    font-size: 0.78rem;
+}
+
+/* ========================================
+   DARK THEME SYSTEM
+======================================== */
+:root {
+    color-scheme: light;
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg: #07111f;
+    --surface: #0d1b2f;
+    --surface-soft: #12233a;
+    --surface-warm: #171a12;
+
+    --navy: #eaf2ff;
+    --navy-soft: #b9c8dc;
+    --muted: #8fa3bd;
+
+    --line: rgba(148, 163, 184, 0.24);
+    --line-blue: rgba(96, 165, 250, 0.24);
+    --line-gold: rgba(250, 204, 21, 0.28);
+
+    --accent: #60a5fa;
+    --accent-dark: #3b82f6;
+    --accent-soft: rgba(96, 165, 250, 0.14);
+
+    --gold: #facc15;
+    --gold-dark: #fde047;
+    --gold-soft: rgba(250, 204, 21, 0.12);
+
+    --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.26);
+    --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.34);
+    --shadow-premium: 0 22px 58px rgba(0, 0, 0, 0.38);
+}
+
+/* ========================================
+   SMOOTH THEME TRANSITION
+======================================== */
+body,
+.navbar,
+.hero,
+.hero::after,
+.hero-badge,
+.capability-line,
+.profile-shape,
+.about-section,
+.arsenal-section,
+.research-section,
+.research-card,
+.journey-section,
+.projects-section,
+.project-card,
+.timeline-card,
+.contact-section,
+.contact-panel,
+.footer,
+.modal-box,
+.detail-block,
+.button,
+.contact-btn,
+.modal-github,
+.nav-links a,
+.arsenal-card,
+.tech-stack span,
+.modal-tech-stack span,
+.research-tags span,
+.timeline-tag,
+.research-badge,
+.theme-toggle-track,
+.theme-toggle-thumb {
+    transition:
+        background-color 260ms ease,
+        background 260ms ease,
+        color 260ms ease,
+        border-color 260ms ease,
+        box-shadow 260ms ease,
+        filter 260ms ease,
+        opacity 260ms ease;
+}
+
+html.theme-changing body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    background: var(--bg);
+    opacity: 0;
+    animation: themeFade 420ms ease;
+}
+
+@keyframes themeFade {
+    0% {
+        opacity: 0;
+    }
+
+    35% {
+        opacity: 0.16;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   DARK GLOBAL BACKGROUND
+======================================== */
+html[data-theme="dark"] body {
+    background:
+        radial-gradient(circle at 18% 8%, rgba(96, 165, 250, 0.14), transparent 26%),
+        radial-gradient(circle at 84% 18%, rgba(250, 204, 21, 0.1), transparent 24%),
+        var(--bg);
+}
+
+html[data-theme="dark"] .global-grid-bg {
+    background-image:
+        linear-gradient(rgba(96, 165, 250, 0.08) 0.5px, transparent 0.5px),
+        linear-gradient(90deg, rgba(96, 165, 250, 0.08) 0.5px, transparent 0.5px);
+}
+
+html[data-theme="dark"] .site-background {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(7, 17, 31, 0.96),
+            rgba(7, 17, 31, 0.9)
+        );
+}
+
+html[data-theme="dark"] .site-background img {
+    opacity: 0.1;
+    filter: grayscale(100%) contrast(0.82) invert(1);
+}
+
+/* ========================================
+   DARK NAVBAR
+======================================== */
+html[data-theme="dark"] .navbar {
+    border-color: rgba(96, 165, 250, 0.18);
+    background: rgba(10, 24, 42, 0.76);
+    box-shadow:
+        0 12px 34px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="dark"] .brand {
+    color: var(--navy);
+}
+
+html[data-theme="dark"] .brand img {
+    filter:
+        brightness(1.12)
+        drop-shadow(0 0 10px rgba(96, 165, 250, 0.75))
+        drop-shadow(0 0 16px rgba(250, 204, 21, 0.22));
+}
+
+html[data-theme="dark"] .nav-links a {
+    color: var(--navy-soft);
+}
+
+html[data-theme="dark"] .nav-links a:hover,
+html[data-theme="dark"] .nav-links a.is-active {
+    color: var(--accent);
+    background:
+        linear-gradient(135deg, rgba(96, 165, 250, 0.14), rgba(250, 204, 21, 0.1));
+}
+
+/* ========================================
+   DARK TOGGLE
+======================================== */
+html[data-theme="dark"] .theme-toggle-track {
+    border-color: rgba(96, 165, 250, 0.26);
+    background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(11, 31, 58, 0.96));
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.12),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.28),
+        0 8px 20px rgba(0, 0, 0, 0.26);
+}
+
+html[data-theme="dark"] .theme-toggle-thumb {
+    transform: translateX(26px);
+    background: #f8fafc;
+    color: var(--gold);
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.32),
+        0 0 14px rgba(250, 204, 21, 0.22);
+}
+
+html[data-theme="dark"] .nav-toggle {
+    border-color: rgba(96, 165, 250, 0.22);
+    background:
+        linear-gradient(135deg, rgba(13, 27, 47, 0.96), rgba(250, 204, 21, 0.1));
+}
+
+html[data-theme="dark"] .nav-toggle span {
+    background: var(--navy);
+}
+
+/* ========================================
+   DARK HERO
+======================================== */
+html[data-theme="dark"] .hero::before {
+    background:
+        radial-gradient(circle, rgba(96, 165, 250, 0.18), rgba(250, 204, 21, 0.08), transparent 70%);
+}
+
+html[data-theme="dark"] .hero::after {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(7, 17, 31, 0) 0%,
+            rgba(7, 17, 31, 0.72) 38%,
+            rgba(7, 17, 31, 0.96) 68%,
+            rgba(7, 17, 31, 1) 100%
+        );
+}
+
+html[data-theme="dark"] .hero-badge,
+html[data-theme="dark"] .capability-line {
+    border-color: rgba(250, 204, 21, 0.2);
+    background:
+        linear-gradient(135deg, rgba(13, 27, 47, 0.92), rgba(250, 204, 21, 0.1));
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"] .hero-badge span:last-child,
+html[data-theme="dark"] .typing-text,
+html[data-theme="dark"] .eyebrow,
+html[data-theme="dark"] .accent-name {
+    color: var(--accent);
+}
+
+html[data-theme="dark"] .live-dot {
+    background: var(--gold);
+}
+
+html[data-theme="dark"] .live-dot::after {
+    background: rgba(250, 204, 21, 0.28);
+}
+
+html[data-theme="dark"] .profile-shape {
+    border-color: rgba(250, 204, 21, 0.26);
+    background:
+        linear-gradient(145deg, rgba(13, 27, 47, 0.96), rgba(24, 41, 68, 0.88), rgba(250, 204, 21, 0.1));
+    box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.34),
+        0 0 18px rgba(96, 165, 250, 0.12),
+        0 0 28px rgba(250, 204, 21, 0.1);
+}
+
+html[data-theme="dark"] .profile-shape::before {
+    background:
+        radial-gradient(circle, rgba(96, 165, 250, 0.2), rgba(250, 204, 21, 0.1), transparent 75%);
+}
+
+/* ========================================
+   DARK BUTTONS
+======================================== */
+html[data-theme="dark"] .button,
+html[data-theme="dark"] .contact-btn,
+html[data-theme="dark"] .modal-github {
+    border-color: rgba(96, 165, 250, 0.18);
+    background: rgba(13, 27, 47, 0.96);
+    color: var(--navy);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+}
+
+html[data-theme="dark"] .button:hover,
+html[data-theme="dark"] .contact-btn:hover,
+html[data-theme="dark"] .modal-github:hover {
+    border-color: rgba(250, 204, 21, 0.48);
+    background:
+        linear-gradient(135deg, rgba(13, 27, 47, 0.98), rgba(250, 204, 21, 0.1));
+    color: var(--accent);
+}
+
+html[data-theme="dark"] .button-primary {
+    border-color: rgba(96, 165, 250, 0.8);
+    background:
+        linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .button-primary:hover {
+    border-color: rgba(250, 204, 21, 0.6);
+    color: #ffffff;
+}
+
+/* ========================================
+   DARK ABOUT
+======================================== */
+html[data-theme="dark"] .about-section {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(7, 17, 31, 1) 0%,
+            rgba(7, 17, 31, 0.96) 18%,
+            rgba(7, 17, 31, 0.78) 34%,
+            rgba(7, 17, 31, 0) 58%
+        );
+}
+
+html[data-theme="dark"] .about-section::before {
+    background:
+        linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.2), rgba(96, 165, 250, 0.16), transparent);
+}
+
+/* ========================================
+   DARK SKILLS SECTION
+======================================== */
+html[data-theme="dark"] .arsenal-section {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(7, 17, 31, 1) 0%,
+            rgba(10, 24, 42, 0.98) 48%,
+            rgba(7, 17, 31, 1) 100%
+        );
+    border-color: rgba(96, 165, 250, 0.12);
+}
+
+html[data-theme="dark"] .arsenal-section::before {
+    background-image:
+        linear-gradient(rgba(96, 165, 250, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96, 165, 250, 0.08) 1px, transparent 1px);
+}
+
+html[data-theme="dark"] .arsenal-section::after {
+    background:
+        radial-gradient(circle at 24% 38%, rgba(96, 165, 250, 0.15), transparent 34%),
+        radial-gradient(circle at 68% 42%, rgba(250, 204, 21, 0.12), transparent 32%),
+        linear-gradient(
+            90deg,
+            rgba(7, 17, 31, 0.86) 0%,
+            rgba(7, 17, 31, 0.3) 46%,
+            rgba(7, 17, 31, 0.76) 100%
+        );
+}
+
+html[data-theme="dark"] .arsenal-card {
+    border-color: rgba(96, 165, 250, 0.16);
+    background:
+        linear-gradient(180deg, rgba(13, 27, 47, 0.98), rgba(10, 24, 42, 0.96));
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"] .arsenal-card:hover,
+html[data-theme="dark"] .arsenal-card:focus-visible {
+    border-color: rgba(250, 204, 21, 0.46);
+}
+
+html[data-theme="dark"] .arsenal-card i {
+    color: var(--accent);
+}
+
+/* ========================================
+   DARK RESEARCH
+======================================== */
+html[data-theme="dark"] .research-card {
+    border-color: rgba(96, 165, 250, 0.16);
+    background:
+        linear-gradient(180deg, rgba(13, 27, 47, 0.98), rgba(10, 24, 42, 0.96));
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"] .research-card::before {
+    background:
+        radial-gradient(circle, rgba(96, 165, 250, 0.14), rgba(250, 204, 21, 0.08), transparent 70%);
+}
+
+html[data-theme="dark"] .research-badge,
+html[data-theme="dark"] .timeline-tag {
+    background:
+        linear-gradient(135deg, rgba(96, 165, 250, 0.14), rgba(250, 204, 21, 0.1));
+    color: var(--accent);
+}
+
+html[data-theme="dark"] .research-tags span {
+    border-color: rgba(96, 165, 250, 0.18);
+    background: rgba(96, 165, 250, 0.08);
+    color: var(--navy-soft);
+}
+
+/* ========================================
+   DARK TIMELINE
+======================================== */
+html[data-theme="dark"] .journey-section {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(7, 17, 31, 1) 0%,
+            rgba(10, 24, 42, 0.98) 48%,
+            rgba(7, 17, 31, 1) 100%
+        );
+    border-color: rgba(96, 165, 250, 0.12);
+}
+
+html[data-theme="dark"] .journey-section::before {
+    background-image:
+        linear-gradient(rgba(96, 165, 250, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96, 165, 250, 0.08) 1px, transparent 1px);
+}
+
+html[data-theme="dark"] .journey-section::after {
+    background:
+        radial-gradient(circle at 18% 28%, rgba(96, 165, 250, 0.15), transparent 32%),
+        radial-gradient(circle at 82% 72%, rgba(250, 204, 21, 0.12), transparent 30%),
+        linear-gradient(90deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.3), rgba(7, 17, 31, 0.76));
+}
+
+html[data-theme="dark"] .timeline-card {
+    border-color: rgba(96, 165, 250, 0.16);
+    background:
+        linear-gradient(180deg, rgba(13, 27, 47, 0.98), rgba(10, 24, 42, 0.96));
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"] .timeline-card.show:hover {
+    border-color: rgba(250, 204, 21, 0.48);
+    box-shadow:
+        0 22px 52px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   DARK PROJECTS
+======================================== */
+html[data-theme="dark"] .projects-section {
+    background:
+        linear-gradient(180deg, rgba(7, 17, 31, 1), rgba(10, 24, 42, 0.96));
+}
+
+html[data-theme="dark"] .projects-section::before {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(96, 165, 250, 0.08), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(250, 204, 21, 0.08), transparent 35%);
+}
+
+html[data-theme="dark"] .project-card {
+    border-color: rgba(96, 165, 250, 0.16);
+    background:
+        linear-gradient(180deg, rgba(13, 27, 47, 0.98), rgba(10, 24, 42, 0.96));
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"] .project-card:hover,
+html[data-theme="dark"] .project-card:focus-visible {
+    border-color: rgba(250, 204, 21, 0.5);
+}
+
+html[data-theme="dark"] .implemented,
+html[data-theme="dark"] .completed {
+    background: rgba(96, 165, 250, 0.14);
+    color: var(--accent);
+}
+
+html[data-theme="dark"] .research {
+    background: rgba(99, 102, 241, 0.16);
+    color: #a5b4fc;
+}
+
+html[data-theme="dark"] .finalist {
+    background: rgba(234, 88, 12, 0.14);
+    color: #fdba74;
+}
+
+html[data-theme="dark"] .building {
+    background: rgba(5, 150, 105, 0.14);
+    color: #6ee7b7;
+}
+
+html[data-theme="dark"] .upcoming {
+    background: rgba(148, 163, 184, 0.12);
+    color: #cbd5e1;
+}
+
+html[data-theme="dark"] .tech-stack span,
+html[data-theme="dark"] .modal-tech-stack span {
+    border-color: rgba(96, 165, 250, 0.18);
+    background: rgba(96, 165, 250, 0.08);
+    color: var(--navy-soft);
+}
+
+html[data-theme="dark"] .tech-stack span:hover {
+    border-color: var(--gold);
+    background: rgba(250, 204, 21, 0.12);
+    color: var(--gold-dark);
+}
+
+/* ========================================
+   DARK MODALS
+======================================== */
+html[data-theme="dark"] .project-modal {
+    background: rgba(2, 6, 23, 0.72);
+}
+
+html[data-theme="dark"] .modal-box {
+    border-color: rgba(96, 165, 250, 0.18);
+    background:
+        linear-gradient(180deg, rgba(13, 27, 47, 0.98), rgba(10, 24, 42, 0.98));
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52);
+}
+
+html[data-theme="dark"] .close-modal {
+    border-color: rgba(96, 165, 250, 0.18);
+    background: rgba(13, 27, 47, 0.96);
+    color: var(--navy);
+}
+
+html[data-theme="dark"] .close-modal:hover {
+    border-color: var(--gold);
+    background: var(--accent-dark);
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .detail-block {
+    border-color: rgba(96, 165, 250, 0.16);
+    background: rgba(10, 24, 42, 0.72);
+}
+
+html[data-theme="dark"] .detail-block li::before {
+    background: var(--gold);
+}
+
+html[data-theme="dark"] .modal-images a {
+    border-color: rgba(96, 165, 250, 0.16);
+    background: rgba(15, 23, 42, 0.8);
+}
+
+/* ========================================
+   DARK CONTACT
+======================================== */
+html[data-theme="dark"] .contact-panel {
+    border-color: rgba(96, 165, 250, 0.16);
+    background:
+        linear-gradient(180deg, rgba(13, 27, 47, 0.98), rgba(10, 24, 42, 0.96));
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"] .contact-btn i {
+    color: var(--accent);
+}
+
+/* ========================================
+   DARK FOOTER
+======================================== */
+html[data-theme="dark"] .footer {
+    border-color: rgba(96, 165, 250, 0.14);
+    background:
+        linear-gradient(180deg, #0a182a, #07111f);
+    color: var(--muted);
+}
+
+/* ========================================
+   DARK MOBILE NAV
+======================================== */
+@media (max-width: 720px) {
+    html[data-theme="dark"] .nav-links {
+        border-top: 1px solid rgba(96, 165, 250, 0.14);
+    }
+
+    html[data-theme="dark"] .site-background {
+        height: 115svh;
+    }
+
+    html[data-theme="dark"] .site-background img {
+        opacity: 0.1;
+    }
+}
